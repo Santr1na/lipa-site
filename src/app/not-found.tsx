@@ -1,20 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Страница не найдена",
+};
 
 export default function NotFound() {
   return (
-    <main id="content" className="mx-auto flex min-h-[70svh] max-w-[72rem] flex-col justify-center px-5 py-16 md:px-8">
-      <p className="text-sm text-stone">404</p>
-      <h1 className="mt-4 font-display text-[clamp(3rem,8vw,5.5rem)] leading-[0.92] font-medium tracking-[-0.05em]">
-        Такой страницы нет.
-      </h1>
-      <div className="mt-8 flex gap-8">
-        <Link href="/" className="border-b border-ink pb-0.5">
-          На главную
-        </Link>
-        <Link href="/quiz" className="border-b border-ink/40 pb-0.5 text-stone hover:text-ink">
-          Формат съёмки
-        </Link>
-      </div>
+    <main id="content" className="shell py-16 md:py-24">
+      <p className="text-sm font-medium text-pine">404</p>
+      <h1 className="mt-2 font-display text-4xl font-medium tracking-[-0.02em]">Такой страницы нет</h1>
+      <p className="mt-4 max-w-md text-ink-soft">
+        Проверьте адрес или вернитесь к изделиям мастерской.
+      </p>
+      <Link href="/" className="mt-6 inline-flex min-h-11 items-center border-b border-ink font-medium">
+        На главную
+      </Link>
     </main>
   );
 }

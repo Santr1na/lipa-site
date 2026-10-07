@@ -1,51 +1,45 @@
 import type { Metadata } from "next";
-import { Golos_Text, Unbounded } from "next/font/google";
-import { Providers } from "@/components/providers";
+import { Literata, Source_Sans_3 } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
-const sans = Golos_Text({
+const sans = Source_Sans_3({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-golos",
+  weight: ["400", "500", "600"],
+  variable: "--font-source",
   display: "swap",
 });
 
-const display = Unbounded({
+const display = Literata({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600"],
-  variable: "--font-unbounded",
+  weight: ["500", "600", "700"],
+  variable: "--font-literata",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Мария Орлова — фотограф, Казань",
-    template: "%s — Мария Орлова",
+    default: "Липа — столярная мастерская в Ярославле",
+    template: "%s — Липа",
   },
   description:
-    "Частный фотограф в Казани: портрет, семейная съёмка и небольшие события. Цены, запись и короткий подбор формата.",
+    "Столярная мастерская «Липа» в Ярославле делает столы, скамьи и полки на заказ из массива: дуб, ясень, сосна и берёза.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="ru"
-      className={`${sans.variable} ${display.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-paper text-ink">
-        <Providers>
-          <a
-            href="#content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2"
-          >
-            К содержанию
-          </a>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </Providers>
+    <html lang="ru" className={`${sans.variable} ${display.variable} h-full antialiased`}>
+      <body className="min-h-full bg-paper font-sans text-ink">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-3 focus:py-2"
+        >
+          К содержанию
+        </a>
+        <SiteHeader />
+        {children}
+        <SiteFooter />
       </body>
     </html>
   );
