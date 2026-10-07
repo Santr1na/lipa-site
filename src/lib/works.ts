@@ -1,14 +1,17 @@
+import type { PhotoName } from "@/lib/photos";
+import { dims } from "@/lib/typo";
+
 export type Work = {
   slug: string;
   name: string;
   kind: string;
-  material: string;
-  size: string;
-  price: string;
+  wood: string;
+  sizes: { label?: string; dims: number[] }[];
+  price: number;
+  priceNote?: string;
+  term: string;
   note: string;
-  image: string;
-  alt: string;
-  crop: string;
+  photo: PhotoName;
 };
 
 export const works: Work[] = [
@@ -16,84 +19,87 @@ export const works: Work[] = [
     slug: "volga",
     name: "Волга",
     kind: "Обеденный стол",
-    material: "Дуб",
-    size: "180 × 90 × 75 см",
-    price: "94\u00a0000\u00a0₽",
-    note: "Прямая кромка, четыре ножки без резного декора. Столешница склеена из дубовых ламелей. На фото — светлое масло. Более тёмный тон делаем, это отдельный слой и немного к сроку.",
-    image: "/photos/volga.jpg",
-    alt: "Обеденный стол из светлого дерева у окна, вокруг четыре стула",
-    crop: "crop-volga",
+    wood: "дуб, тёмное масло",
+    sizes: [{ dims: [200, 95, 76] }],
+    price: 118000,
+    term: "4–6 недель",
+    note: "Столешница толщиной 4 см на двух опорах-щитах, без проножки — стулья задвигаются свободно. Тёмное масло проявляет рисунок дуба и скрывает мелкие царапины.",
+    photo: "volga",
   },
   {
     slug: "posad",
     name: "Посад",
-    kind: "Стол и две скамьи",
-    material: "Дуб",
-    size: "стол 200 × 90 × 76 см, скамьи 180 × 36 × 45 см",
-    price: "128\u00a0000\u00a0₽",
-    note: "Комплект для кухни или большой комнаты. Скамьи без спинки, чтобы их можно было задвинуть под столешницу. Скамью можно заказать и отдельно.",
-    image: "/photos/posad.jpg",
-    alt: "Толстый деревянный стол и две скамьи на деревянном полу",
-    crop: "crop-posad",
+    kind: "Стол и скамья",
+    wood: "сосна",
+    sizes: [
+      { label: "стол", dims: [180, 85, 76] },
+      { label: "скамья", dims: [160, 35, 45] },
+    ],
+    price: 64000,
+    term: "4–6 недель",
+    note: "Кухонный комплект из толстой сосны. Скамья целиком уходит под стол, вторая такая же — 16 000 ₽. Сосна мягкая, со временем на ней появятся следы жизни, и это ей идёт.",
+    photo: "posad",
   },
   {
     slug: "naberezhnaya",
     name: "Набережная",
-    kind: "Скамья",
-    material: "Ясень",
-    size: "160 × 38 × 45 см",
-    price: "27\u00a0500\u00a0₽",
-    note: "Сиденье из ясеня, спинки нет. Высота 45 см — обычная посадка за обеденным столом. Подушку не шьём, в цену входит только дерево и масло.",
-    image: "/photos/naberezhnaya.jpg",
-    alt: "Деревянная скамья у светлой стены",
-    crop: "crop-bench",
+    kind: "Скамья в прихожую",
+    wood: "дуб",
+    sizes: [{ dims: [150, 38, 45] }],
+    price: 31000,
+    term: "2–4 недели",
+    note: "Доска 5 см на двух сплошных опорах, без спинки. Выдерживает троих взрослых, а под ней остаётся место для обуви.",
+    photo: "naberezhnaya",
   },
   {
     slug: "cherdak",
     name: "Чердак",
-    kind: "Настенная полка",
-    material: "Сосна",
-    size: "140 × 22 см",
-    price: "9\u00a0800\u00a0₽",
-    note: "Одна полка со скрытым крепежом. Борт невысокий, чтобы книги не съезжали. Пара полок на одну стену считается как два изделия, крепёж уже в цене.",
-    image: "/photos/cherdak.jpg",
-    alt: "Светлая деревянная полка на стене, на ней книги и небольшие предметы",
-    crop: "crop-shelf",
+    kind: "Полки на рейках",
+    wood: "ольха",
+    sizes: [{ label: "полка", dims: [120, 25] }],
+    price: 7500,
+    priceNote: "за полку",
+    term: "2–3 недели",
+    note: "Полки лежат на стальных рейках, высоту каждой можно поменять без дрели. Пара реек с кронштейнами — 3 200 ₽. На фото набор из шести полок.",
+    photo: "cherdak",
   },
   {
     slug: "koromyslo",
     name: "Коромысло",
-    kind: "Стеллаж",
-    material: "Берёза",
-    size: "90 × 32 × 190 см",
-    price: "41\u00a0000\u00a0₽",
-    note: "Пять полок, задней стенки нет: легче придвинуть к стене и меньше мест, где копится пыль. Полки можно переставить по высоте при сборке у вас.",
-    image: "/photos/koromyslo.jpg",
-    alt: "Высокий деревянный стеллаж, плотно заполненный книгами",
-    crop: "crop-book",
+    kind: "Стеллаж во всю стену",
+    wood: "дуб",
+    sizes: [{ label: "секция", dims: [80, 35, 280] }],
+    price: 46000,
+    priceNote: "за секцию",
+    term: "5–7 недель",
+    note: "Собираем из секций по 80 см и подгоняем по высоте до потолка. Внизу можно сделать закрытые ящики. Лестница на рейке считается отдельно, от 28 000 ₽.",
+    photo: "koromyslo",
   },
   {
     slug: "oka",
     name: "Ока",
     kind: "Журнальный стол",
-    material: "Орех",
-    size: "Ø 90 см, высота 42 см",
-    price: "46\u00a0000\u00a0₽",
-    note: "Круглая столешница на низких ножках. Орех берём, когда на складе есть сухая доска. Если ширины не хватает, предлагаем дуб и называем другую цену до начала работы.",
-    image: "/photos/oka.jpg",
-    alt: "Круглый журнальный стол из тёмного дерева, на нём книги и растение",
-    crop: "crop-oka",
+    wood: "ясень",
+    sizes: [{ dims: [110, 60, 42] }],
+    price: 34000,
+    term: "2–4 недели",
+    note: "Лёгкий стол на четырёх ножках с небольшим развалом. Ясень светлый и твёрдый, удары переносит лучше сосны и ольхи.",
+    photo: "oka",
   },
 ];
 
-export const featuredSlugs = ["volga", "naberezhnaya", "koromyslo"] as const;
-
-export function featuredWorks() {
-  return featuredSlugs.map((slug) => {
-    const work = works.find((item) => item.slug === slug);
-    if (!work) {
-      throw new Error(`Не найдено изделие ${slug}`);
-    }
-    return work;
-  });
+export function workBySlug(slug: string) {
+  const work = works.find((item) => item.slug === slug);
+  if (!work) {
+    throw new Error(`Не найдено изделие ${slug}`);
+  }
+  return work;
 }
+
+export const featured = ["volga", "naberezhnaya", "cherdak"].map(workBySlug);
+
+export function sizeLines(work: Work) {
+  return work.sizes.map((size) => (size.label ? `${size.label}\u00a0${dims(size.dims)}` : dims(size.dims)));
+}
+
+export const lowestPrice = Math.min(...works.map((work) => work.price));

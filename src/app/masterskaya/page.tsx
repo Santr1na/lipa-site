@@ -1,132 +1,133 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Frame } from "@/components/frame";
+import { NextStep } from "@/components/next-step";
 import { PageIntro } from "@/components/page-intro";
+import { Spec } from "@/components/spec";
+import { ru } from "@/lib/typo";
 
 export const metadata: Metadata = {
   title: "Мастерская",
   description:
-    "Как устроена столярная мастерская «Липа» в Ярославле: дерево, сборка, масло и сроки.",
+    "Как работает столярная мастерская «Липа» в Ярославле: сухая доска, соединения на шипах, масло вместо лака и честные сроки.",
 };
 
-const blocks = [
+const principles = [
   {
-    title: "Дерево",
-    text: "Дуб, ясень, сосна и берёза. Орех — когда есть сухая доска нужной ширины. Берём камерную сушку, не свежий лес с рынка. Щит склеиваем сами из ламелей.",
+    title: "Сухая доска",
+    text: "Дуб, ясень, ольху и сосну берём камерной сушки. Перед раскроем доска неделю лежит в цехе, чтобы привыкнуть к воздуху — тогда столешница не поведёт у вас дома.",
   },
   {
-    title: "Сборка",
-    text: "Чертёж с габаритом и сечением ножек. Потом раскрой, склейка щита, шипы или шканты там, где соединение несёт вес. Шурупы снаружи не оставляем.",
+    title: "Соединения",
+    text: "Ножки ставим на шипы, щиты клеим из ламелей. Там, где соединение держит вес, нет ни шурупов снаружи, ни мебельных уголков.",
   },
   {
     title: "Масло",
-    text: "Два слоя, без лаковой плёнки. Дерево остаётся матовым. Царапину потом можно подшлифовать и обновить маслом, без полной переделки в цехе.",
+    text: "Два слоя масла с воском вместо лака. Дерево остаётся матовым и тёплым на ощупь, а царапину можно подшлифовать дома, без возврата в цех.",
   },
 ];
 
+const terms = [
+  { label: "Полки", value: "2–3 недели" },
+  { label: "Скамья, журнальный стол", value: "2–4 недели" },
+  { label: "Обеденный стол", value: "4–6 недель" },
+  { label: "Стеллаж во всю стену", value: "5–7 недель" },
+];
+
 const declined = [
-  "Кухни целиком и встроенные шкафы",
-  "ЛДСП, МДФ и плёнка «под дерево»",
-  "Реставрация старой мебели",
-  "Резной декор и золочение",
-  "Срок «к субботе» на большой стол",
+  "Кухни и шкафы-купе",
+  "ЛДСП, МДФ и плёнку «под дерево»",
+  "Реставрацию старой мебели",
+  "Резьбу и золочение",
+  "Большой стол «к выходным»",
 ];
 
 export default function WorkshopPage() {
   return (
-    <main id="content" className="shell pt-10 pb-8 md:pt-14">
-      <PageIntro kicker="Мастерская" title="Как мы работаем">
-        <p>
-          «Липа» — небольшая столярная мастерская в Ярославле. Салона с витриной нет: есть
-          верстак, склад сухой доски и место, где изделие собирают целиком, прежде чем везти
-          его к вам.
-        </p>
-      </PageIntro>
+    <main id="content" className="pb-20 md:pb-28">
+      <div className="shell pt-10 md:pt-14">
+        <PageIntro kicker="Мастерская" title="Как мы работаем">
+          <p>
+            {ru(
+              "«Липа» — небольшая мастерская в Ярославле. Нас трое: два столяра и мастер по отделке. Сами принимаем заказ, сами пилим и сами привозим. Салона нет — есть цех на Полушкиной Роще.",
+            )}
+          </p>
+        </PageIntro>
 
-      <figure className="mt-10 md:mt-12">
-        <Frame
-          src="/photos/shop.jpg"
-          alt="Столяр за верстаком в цехе, на стене развешаны доски и инструмент"
-          crop="crop-shop"
-          ratio="aspect-[4/5] md:aspect-[16/9]"
-          sizes="(min-width: 1024px) 1120px, 100vw"
-          priority
-        />
-        <figcaption className="mt-3 text-sm text-ink-soft">
-          Цех на ул. Полушкина Роща, 16, строение 3. Приехать можно в часы работы.
-        </figcaption>
-      </figure>
-
-      <div className="mt-12 grid border border-line md:grid-cols-3">
-        {blocks.map((block) => (
-          <section key={block.title} className="border-b border-line p-5 last:border-b-0 md:border-r md:border-b-0 md:p-6 md:last:border-r-0">
-            <h2 className="font-display text-2xl font-medium">{block.title}</h2>
-            <p className="mt-3 text-ink-soft">{block.text}</p>
-          </section>
-        ))}
-      </div>
-
-      <div className="mt-12 grid gap-6 md:grid-cols-2 md:gap-8">
-        <figure>
+        <figure className="mt-10 md:mt-14">
           <Frame
-            src="/photos/hands.jpg"
-            alt="Руки со стамеской за работой по деревянной заготовке"
-            crop="crop-hands"
-            ratio="aspect-[4/5]"
-            sizes="(min-width: 768px) 50vw, 100vw"
+            photo="verstak"
+            reveal="load"
+            eager
+            className="aspect-[4/5] sm:aspect-[16/9]"
+            sizes="(min-width: 1152px) 1088px, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 2.5rem)"
           />
-          <figcaption className="mt-3 text-sm text-ink-soft">Подгонка соединений до сборки.</figcaption>
-        </figure>
-        <figure>
-          <Frame
-            src="/photos/boards.jpg"
-            alt="Стопка строганых досок и ручная пила"
-            crop="crop-boards"
-            ratio="aspect-[4/5]"
-            sizes="(min-width: 768px) 50vw, 100vw"
-          />
-          <figcaption className="mt-3 text-sm text-ink-soft">
-            Доска приходит сухой. Сырой горбыль в работу не берём.
+          <figcaption className="mt-3 text-[0.95rem] text-ink-soft">
+            {ru("Верстак в цехе: чертёж, разметка и стружка от сегодняшней работы.")}
           </figcaption>
         </figure>
       </div>
 
-      <section className="mt-14 max-w-3xl" aria-labelledby="queue-heading">
-        <h2 id="queue-heading" className="font-display text-2xl font-medium md:text-3xl">
-          Срок называем до предоплаты
+      <section className="shell mt-16 md:mt-24" aria-labelledby="principles-heading">
+        <h2 id="principles-heading" className="h2 max-w-xl">
+          {ru("Три вещи, на которых держится мебель")}
         </h2>
-        <p className="mt-4 text-ink-soft">
-          Полка обычно занимает две–три недели, скамья — две–четыре, стол — от трёх до шести.
-          В срок уже входит очередь. Если доска нужной ширины кончилась, говорим об этом сразу
-          и либо ждём поставку, либо меняем породу и цену.
-        </p>
-      </section>
-
-      <section className="mt-12 max-w-3xl" aria-labelledby="no-heading">
-        <h2 id="no-heading" className="font-display text-2xl font-medium md:text-3xl">
-          Чего не берём
-        </h2>
-        <ul className="mt-4 border-t border-line">
-          {declined.map((item) => (
-            <li key={item} className="border-b border-line py-3">
-              {item}
+        <ol className="mt-8 grid gap-10 lg:grid-cols-3">
+          {principles.map((item, index) => (
+            <li key={item.title} className="border-t border-ink pt-4">
+              <p className="font-display text-pine tabular-nums">0{index + 1}</p>
+              <h3 className="h3 mt-2">{item.title}</h3>
+              <p className="mt-3 text-ink-soft">{ru(item.text)}</p>
             </li>
           ))}
-        </ul>
+        </ol>
       </section>
 
-      <p className="mt-10 max-w-3xl">
-        Посмотреть доску и уже собранное изделие можно на месте. Если в цехе склейка, будет
-        пыльно — позвоните за час, скажем, когда удобно зайти.{" "}
-        <Link href="/kontakty" className="border-b border-pine text-pine">
-          Адрес и часы
-        </Link>
-        . Если размер уже есть, сразу{" "}
-        <Link href="/zakaz" className="border-b border-pine text-pine">
-          к заказу
-        </Link>
-        .
-      </p>
+      <section className="shell mt-16 grid gap-10 md:mt-24 md:grid-cols-2 md:gap-8">
+        <figure className="min-w-0">
+          <Frame photo="ship" className="aspect-[4/5]" sizes="(min-width: 1152px) 528px, (min-width: 768px) calc(50vw - 3rem), calc(100vw - 2.5rem)" />
+          <figcaption className="mt-3 text-[0.95rem] text-ink-soft">
+            {ru("Шип под ножку подгоняем стамеской, пока он не войдёт в гнездо без зазора.")}
+          </figcaption>
+        </figure>
+        <figure className="min-w-0 md:mt-28">
+          <Frame photo="sklad" className="aspect-[4/5]" sizes="(min-width: 1152px) 528px, (min-width: 768px) calc(50vw - 3rem), calc(100vw - 2.5rem)" />
+          <figcaption className="mt-3 text-[0.95rem] text-ink-soft">
+            {ru("Доска камерной сушки на складе. Каждую партию проверяем влагомером.")}
+          </figcaption>
+        </figure>
+      </section>
+
+      <section className="shell mt-16 grid gap-14 md:mt-24 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-6">
+          <h2 className="h2">Срок называем до предоплаты</h2>
+          <p className="mt-4 text-ink-soft">
+            {ru(
+              "В срок уже входит очередь. Если доска нужной ширины кончилась, говорим об этом сразу и либо ждём поставку, либо предлагаем другую породу и пересчитываем цену.",
+            )}
+          </p>
+          <Spec className="mt-6 border-t border-line pt-2" rows={terms} />
+        </div>
+        <div className="lg:col-span-5 lg:col-start-8">
+          <h2 className="h2">Чего не берём</h2>
+          <ul className="mt-6 border-t border-line">
+            {declined.map((item) => (
+              <li key={item} className="flex gap-3 border-b border-line py-3">
+                <span aria-hidden="true" className="text-ink-soft">
+                  —
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <NextStep
+        title="Приезжайте посмотреть доску вживую"
+        text="Образцы пород и масла лежат в цехе. Позвоните за час: если идёт склейка, подскажем, когда удобнее зайти."
+        primary={{ href: "/kontakty", label: "Адрес и часы" }}
+        secondary={{ href: "/zakaz", label: "Как сделать заказ" }}
+      />
     </main>
   );
 }

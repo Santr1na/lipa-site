@@ -1,42 +1,30 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
+import { photos, type PhotoName } from "@/lib/photos";
 
 type FrameProps = {
-  src: string;
-  alt: string;
-  crop: string;
+  photo: PhotoName;
   sizes: string;
-  ratio?: string;
-  priority?: boolean;
   className?: string;
+  reveal?: "load" | "scroll" | "none";
+  eager?: boolean;
 };
 
-export function Frame({
-  src,
-  alt,
-  crop,
-  sizes,
-  ratio = "aspect-[4/5] md:aspect-[3/2]",
-  priority = false,
-  className = "",
-}: FrameProps) {
+export function Frame({ photo, sizes, className = "", reveal = "scroll", eager = false }: FrameProps) {
+  const { src, alt, color, focus, focusSm } = photos[photo];
+  const style = { backgroundColor: color, "--focus": focus, "--focus-sm": focusSm } as CSSProperties;
+
   return (
-    <div className={`relative overflow-hidden bg-paper-deep ${ratio} ${className}`}>
+    <div className={`frame ${className}`} style={style} data-reveal={reveal}>
       <Image
         src={src}
         alt={alt}
         fill
-        priority={priority}
         sizes={sizes}
-        className={`reveal object-cover ${crop}`}
+        loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : "auto"}
+        className="frame-img"
       />
     </div>
-  );
-}
-
-export function Thumb({ src, crop }: { src: string; crop: string }) {
-  return (
-    <span aria-hidden="true" className="relative block h-16 w-[4.75rem] shrink-0 overflow-hidden bg-paper-deep sm:h-[4.5rem] sm:w-24">
-      <Image src={src} alt="" fill sizes="96px" className={`object-cover ${crop}`} />
-    </span>
   );
 }

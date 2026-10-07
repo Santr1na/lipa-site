@@ -1,91 +1,112 @@
 import Link from "next/link";
-import { Frame, Thumb } from "@/components/frame";
-import { featuredWorks } from "@/lib/works";
+import { Frame } from "@/components/frame";
+import { ArrowLink, ButtonLink } from "@/components/links";
+import { Spec } from "@/components/spec";
+import { site } from "@/lib/site";
+import { dotted, price, ru } from "@/lib/typo";
+import { featured, lowestPrice, sizeLines, workBySlug } from "@/lib/works";
 
-const facts = [
-  { label: "Город", value: "Ярославль" },
-  { label: "Изделия", value: "столы, скамьи, полки" },
-  { label: "Дерево", value: "дуб, ясень, сосна, берёза" },
-  { label: "Срок", value: "от двух недель" },
+const steps = [
+  "Позвоните или напишите, что нужно: стол, скамья, полки или стеллаж.",
+  "Пришлите размеры и фото места, где будет стоять мебель.",
+  "Мы называем породу, цену и срок. После предоплаты начинаем раскрой.",
 ];
 
 export default function HomePage() {
-  const featured = featuredWorks();
+  const hero = workBySlug("posad");
 
   return (
     <main id="content">
-      <div className="shell grid gap-8 pt-8 pb-6 md:pt-12 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10 lg:pt-16">
-        <div className="lg:col-span-7">
-          <p className="text-sm font-medium text-pine">Ярославль</p>
-          <h1 className="mt-3 max-w-[16em] font-display text-[1.85rem] leading-[1.15] font-medium tracking-[-0.02em] text-pretty sm:text-4xl lg:text-[2.9rem]">
-            Делаем столы, скамьи и полки на заказ из цельного дерева.
-          </h1>
-          <p className="mt-4 max-w-xl text-ink-soft">
-            Мастерская «Липа». Размер под комнату, покрытие — масло, без плёнки «под дерево».
+      <section className="shell pt-8 md:pt-14 lg:pt-16">
+        <p className="kicker">Мебель на заказ с {site.since} года</p>
+        <h1 className="display mt-5 max-w-[19em]">{ru("Столы, скамьи и полки из массива — под ваш размер")}</h1>
+
+        <div className="mt-6 grid gap-x-12 gap-y-8 lg:mt-8 lg:grid-cols-12">
+        <div className="lg:col-span-6">
+          <p className="lead max-w-xl text-ink-soft">
+            {ru(
+              "«Липа» — небольшой цех на Полушкиной Роще в Ярославле. Делаем мебель из дуба, ясеня, ольхи и сосны и покрываем её маслом.",
+            )}
           </p>
-          <p className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-            <Link href="/raboty" className="inline-flex min-h-11 items-center border-b border-ink pb-0.5 font-medium">
-              Смотреть работы
-            </Link>
-            <Link href="/zakaz" className="inline-flex min-h-11 items-center border-b border-pine pb-0.5 font-medium text-pine">
-              Как сделать заказ
-            </Link>
-          </p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
+            <ButtonLink href="/raboty">Работы и цены</ButtonLink>
+            <ArrowLink href="/zakaz">Как заказать</ArrowLink>
+          </div>
         </div>
 
-        <figure className="order-2 min-w-0 lg:order-none lg:col-span-12">
+        <figure className="order-2 min-w-0 lg:order-none lg:col-span-12 lg:row-start-2 lg:mt-4">
           <Frame
-            src="/photos/volga.jpg"
-            alt="Обеденный стол из светлого дерева у окна, вокруг четыре стула"
-            crop="crop-volga"
-            ratio="aspect-[4/5] md:aspect-[16/10]"
-            sizes="(min-width: 1024px) 1120px, 100vw"
-            priority
+            photo="posad"
+            reveal="load"
+            eager
+            className="aspect-square sm:aspect-[3/2] lg:aspect-[16/9]"
+            sizes="(min-width: 1152px) 1088px, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 2.5rem)"
           />
-          <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 text-sm text-ink-soft">
-            <span>Обеденный стол «Волга», дуб, 180 × 90 см</span>
-            <Link href="/raboty#volga" className="text-ink underline decoration-line underline-offset-4 hover:text-pine">
-              Карточка изделия
+          <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 text-[0.95rem]">
+            <span>
+              {hero.kind} «{hero.name}»<span className="text-ink-soft">{"\u00a0· "}{hero.wood}</span>
+            </span>
+            <Link href="/raboty#posad" className="link tabular-nums">
+              {price(hero.price)}
             </Link>
           </figcaption>
         </figure>
 
-        <dl className="order-3 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-line pt-6 lg:order-none lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:grid-cols-1 lg:self-end lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
-          {facts.map((fact) => (
-            <div key={fact.label} className="min-w-0">
-              <dt className="text-sm text-ink-soft">{fact.label}</dt>
-              <dd className="mt-1 font-display text-lg leading-snug">{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-
-      <section className="shell pt-12 pb-4 md:pt-16" aria-labelledby="works-heading">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <h2 id="works-heading" className="font-display text-2xl font-medium tracking-[-0.02em] md:text-3xl">
-            Сейчас в мастерской
-          </h2>
-          <Link href="/raboty" className="text-sm underline decoration-line underline-offset-4 hover:text-pine">
-            Все изделия и цены
-          </Link>
+        <Spec
+          className="order-3 border-t border-line pt-3 lg:order-none lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end lg:border-t-0 lg:pt-0"
+          rows={[
+            { label: "Цены", value: `от ${price(lowestPrice)}` },
+            { label: "Срок", value: "2–7 недель" },
+            { label: "Породы", value: "дуб, ясень, ольха, сосна" },
+            { label: "Доставка", value: "по Ярославлю" },
+          ]}
+        />
         </div>
-        <ul className="mt-6 border-t border-line">
+      </section>
+
+      <section className="shell mt-20 md:mt-28" aria-labelledby="works-heading">
+        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-ink pb-4">
+          <h2 id="works-heading" className="h2">
+            Что заказывают чаще всего
+          </h2>
+          <ArrowLink href="/raboty" className="-mb-2">
+            Все работы и цены
+          </ArrowLink>
+        </div>
+        <ul>
           {featured.map((work) => (
             <li key={work.slug}>
               <Link
                 href={`/raboty#${work.slug}`}
-                className="grid grid-cols-[4.75rem_minmax(0,1fr)] items-center gap-4 border-b border-line py-4 hover:bg-paper-deep/60 sm:grid-cols-[6rem_minmax(0,1fr)_auto] sm:gap-6"
+                className="group grid grid-cols-[5.25rem_minmax(0,1fr)] items-center gap-x-3 border-b border-line py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)_auto] sm:gap-x-8 sm:py-5"
               >
-                <Thumb src={work.image} crop={work.crop} />
+                <Frame
+                  photo={work.photo}
+                  reveal="none"
+                  className="aspect-[4/3]"
+                  sizes="(min-width: 640px) 136px, 84px"
+                />
                 <span className="min-w-0">
-                  <span className="font-display block text-xl leading-tight font-medium">{work.name}</span>
-                  <span className="mt-1 block text-sm text-ink-soft">
-                    {work.kind} · {work.material}
+                  <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                    <span className="min-w-0 font-display text-[1.3rem] leading-tight group-hover:text-pine">
+                      {work.name}
+                    </span>
+                    <span className="ml-auto shrink-0 text-right font-display text-lg leading-tight whitespace-nowrap tabular-nums sm:hidden">
+                      {price(work.price)}
+                      {work.priceNote ? (
+                        <span className="mt-0.5 block font-sans text-[0.8rem] font-normal whitespace-normal text-ink-soft">{work.priceNote}</span>
+                      ) : null}
+                    </span>
                   </span>
-                  <span className="mt-1 block text-sm text-ink-soft">{work.size}</span>
+                  <span className="mt-1 block text-[0.95rem] text-ink-soft">
+                    {dotted(ru(work.kind), work.wood, sizeLines(work).join(", "))}
+                  </span>
                 </span>
-                <span className="col-start-2 row-start-2 font-display text-lg tabular-nums sm:col-start-3 sm:row-start-1 sm:self-center sm:text-right">
-                  {work.price}
+                <span className="hidden text-right font-display text-xl leading-tight tabular-nums sm:block">
+                  {price(work.price)}
+                  {work.priceNote ? (
+                    <span className="mt-0.5 block font-sans text-[0.9rem] text-ink-soft">{work.priceNote}</span>
+                  ) : null}
                 </span>
               </Link>
             </li>
@@ -93,49 +114,61 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section className="shell grid items-center gap-8 py-14 md:py-20 lg:grid-cols-12" aria-labelledby="shop-heading">
+      <section className="shell mt-20 grid items-center gap-8 md:mt-28 lg:grid-cols-12 lg:gap-12" aria-labelledby="shop-heading">
         <div className="lg:col-span-5">
-          <h2 id="shop-heading" className="font-display text-2xl font-medium tracking-[-0.02em] md:text-3xl">
-            Один цех на Полушкиной Роще
+          <p className="kicker">Мастерская</p>
+          <h2 id="shop-heading" className="h2 mt-4">
+            Цех, а не салон
           </h2>
           <p className="mt-4 text-ink-soft">
-            Салона с витриной нет. Есть верстак, сухая доска и место, где стол собирают целиком до того, как везти его к вам. Посмотреть образцы можно в часы работы — лучше позвонить за час.
+            {ru(
+              "Витрины у нас нет. Есть верстак, склад сухой доски и место, где изделие собирают целиком, прежде чем везти к вам. Образцы пород и масла можно посмотреть на месте — позвоните за час.",
+            )}
           </p>
-          <Link href="/masterskaya" className="mt-6 inline-flex min-h-11 items-center border-b border-ink pb-0.5 font-medium">
+          <ArrowLink href="/masterskaya" className="mt-5">
             Как устроена мастерская
-          </Link>
+          </ArrowLink>
         </div>
-        <div className="min-w-0 lg:col-span-7">
-          <Frame
-            src="/photos/shop.jpg"
-            alt="Столяр за верстаком: вокруг доски, инструмент и стружка"
-            crop="crop-shop"
-            ratio="aspect-[4/5] md:aspect-[4/3]"
-            sizes="(min-width: 1024px) 640px, 100vw"
-          />
-        </div>
+        <Frame
+          photo="rubanok"
+          className="aspect-[4/5] min-w-0 sm:aspect-[3/2] lg:col-span-7"
+          sizes="(min-width: 1152px) 620px, (min-width: 1024px) 55vw, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 2.5rem)"
+        />
       </section>
 
-      <section className="border-t border-line bg-paper-deep" aria-labelledby="order-heading">
-        <div className="shell py-12 md:py-16">
-          <h2 id="order-heading" className="font-display text-2xl font-medium tracking-[-0.02em] md:text-3xl">
-            Как начинается заказ
-          </h2>
-          <ol className="mt-6 max-w-3xl border-t border-line/80">
-            {[
-              "Позвоните и скажите, что нужно: стол, скамья или полка.",
-              "Пришлите размеры и фото места, куда встанет мебель.",
-              "Согласуем породу, цену, срок и предоплату — потом пилим.",
-            ].map((step, index) => (
-              <li key={step} className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-3 border-b border-line/80 py-4">
-                <span className="font-display text-pine tabular-nums">0{index + 1}</span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
-          <Link href="/zakaz" className="mt-6 inline-flex min-h-11 items-center border-b border-pine pb-0.5 font-medium text-pine">
-            Полный порядок заказа
-          </Link>
+      <section className="mt-20 bg-paper-deep md:mt-28" aria-labelledby="order-heading">
+        <div className="shell grid gap-12 py-14 md:py-20 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <h2 id="order-heading" className="h2">
+              Как начинается заказ
+            </h2>
+            <ol className="mt-7 border-t border-ink/15">
+              {steps.map((step, index) => (
+                <li key={step} className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-3 border-b border-ink/15 py-4">
+                  <span className="font-display text-lg text-pine tabular-nums">0{index + 1}</span>
+                  <span>{ru(step)}</span>
+                </li>
+              ))}
+            </ol>
+            <ArrowLink href="/zakaz" className="mt-5">
+              Порядок, сроки и оплата
+            </ArrowLink>
+          </div>
+          <div className="self-start border-t-2 border-pine pt-5 lg:col-span-4 lg:col-start-9">
+            <p className="text-[0.95rem] text-ink-soft">Телефон мастерской</p>
+            <a
+              href={site.phone.href}
+              className="mt-1 block font-display text-[1.9rem] leading-tight whitespace-nowrap tabular-nums"
+            >
+              {site.phone.display}
+            </a>
+            <p className="mt-2 text-[0.95rem] text-ink-soft">
+              {site.hours[0].short}, {site.hours[0].time}. {ru("На этот же номер можно написать в мессенджер.")}
+            </p>
+            <ButtonLink href={site.phone.href} className="mt-5">
+              Позвонить
+            </ButtonLink>
+          </div>
         </div>
       </section>
     </main>

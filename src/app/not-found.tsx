@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ArrowLink } from "@/components/links";
 
 export const metadata: Metadata = {
   title: "Страница не найдена",
@@ -7,15 +7,13 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main id="content" className="shell py-16 md:py-24">
-      <p className="text-sm font-medium text-pine">404</p>
-      <h1 className="mt-2 font-display text-4xl font-medium tracking-[-0.02em]">Такой страницы нет</h1>
-      <p className="mt-4 max-w-md text-ink-soft">
-        Проверьте адрес или вернитесь к изделиям мастерской.
-      </p>
-      <Link href="/" className="mt-6 inline-flex min-h-11 items-center border-b border-ink font-medium">
-        На главную
-      </Link>
+    <main id="content" className="shell py-20 md:py-28">
+      <p className="kicker">404</p>
+      <h1 className="h1 mt-4">Такой страницы нет</h1>
+      <p className="lead mt-4 max-w-md text-ink-soft">Проверьте адрес или вернитесь к&nbsp;изделиям мастерской.</p>
+      <ArrowLink href="/raboty" className="mt-6">
+        Работы и цены
+      </ArrowLink>
     </main>
   );
 }
