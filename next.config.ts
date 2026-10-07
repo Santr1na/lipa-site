@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
 
+function pagesBasePath() {
+  const value = process.env.NEXT_PUBLIC_BASE_PATH?.trim() ?? "";
+  if (!value || value === "/") return undefined;
+  return value.startsWith("/") ? value.replace(/\/$/, "") : `/${value}`;
+}
+
+const basePath = pagesBasePath();
+
 const nextConfig: NextConfig = {
   output: "export",
+  trailingSlash: true,
+  basePath,
+  assetPrefix: basePath,
   devIndicators: false,
   images: {
     loader: "custom",
